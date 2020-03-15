@@ -9,7 +9,8 @@
 
 2. GUI   
 메인.  
-Swing, Jframe 등 외형을 담당한다.  
+Swing, Jframe,  등 외형을 담당한다.  
+JChooser를 통한 탐색기 구현
 
 3. ReadExcell  
 Xlsx 파일을 불러, 해당 엑셀을 분석 및 사용하기 쉽게 데이터로 변환한다.  
