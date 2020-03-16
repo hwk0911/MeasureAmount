@@ -3,8 +3,9 @@
 # 에이블리 발주 항목 계산기  
 
 ## 프로젝트 참여 
-기획 : laid_3  
-개발 : cafeCoder   
+요구 : 비앤드지투   
+기획 : laid_3   
+개발 : cafeCoder     
 
 ## Class   
 1. Calculator  
