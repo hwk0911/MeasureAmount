@@ -23,8 +23,8 @@
 
 ### 요구사항에 대한 초안
 1. GUI 초안  
-    1. Loading    
+    1. Loading       
 ![](https://github.com/hwk0911/MeasureAmount/blob/master/resource/Scheme/load.png?raw=true)
     
-    2. Main
+    2. Main   
 ![](https://github.com/hwk0911/MeasureAmount/blob/master/resource/Scheme/MAIN_%EC%B4%88%EC%95%88.png?raw=true)
