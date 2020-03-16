@@ -17,7 +17,7 @@
 Swing, Jframe,  등 외형을 담당한다.  
 JChooser를 통한 탐색기 구현
 
-3. ReadExcell  
+3. XLSXController  
 Xlsx 파일을 불러, 해당 엑셀을 분석 및 사용하기 쉽게 데이터로 변환한다.  
 상품명, 옵션 정보, 수량 에 대한 데이터를 리스트 항목으로 인덱스로 저장하여,  
 이중 맵을 통해 데이터를 저장한다. 후에 Calculator 클래스를 통해 연산한다.  
@@ -31,7 +31,7 @@ Xlsx 파일을 불러, 해당 엑셀을 분석 및 사용하기 쉽게 데이터
 1. GUI를 통해 사용자가 엑셀 파일을 JFileChooser로 구현 된 탐색기를 통해
 불러온다.   
 
-2. ReadExcell 클래스에서 Xlsx파일을 분석 및 데이터를 가공한다.  
+2. XLSXController 클래스에서 Xlsx파일을 분석 및 데이터를 가공한다.  
 
 3. Calculator 클래스에서 가공 된 데이터를 받아 각 항목에 대한 연산을 수행한다.  
 
