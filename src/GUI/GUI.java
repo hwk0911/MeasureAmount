@@ -1,124 +1,101 @@
 package GUI;
 
-import ReadExcell.ReadExcell;
-import SaveText.SaveText;
-import javafx.stage.FileChooser;
+import org.w3c.dom.ls.LSOutput;
 
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
-import java.net.InetAddress;
-import java.util.HashMap;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.sql.Time;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class GUI extends JFrame {
-    HashMap<String, HashMap<String, Double>> dataMap;
+public abstract class GUI extends JFrame{
+    JFrame jFrame;
+    ImageIcon loadingImg;
 
-
-    private static String defaultRoute = "";
-
-    public GUI() throws Exception{
-        super("비앤드지투 발주 도우미");
-
-        setDefaultRoute();
-        searcherButton();
+    String imgRoute;
 
 
-
-
-
-        setBounds(960,200,522,200);
-        setVisible(true);
+    GUI (String imgRoute) {
+        this.imgRoute = imgRoute;
+        setLoadingImg();
     }
 
-    public void setDefaultRoute () throws Exception{
-        defaultRoute = System.getProperty("user.home") + "\\Downloads";
-        System.out.println(defaultRoute);
-    }
+    public void showLoading() {
+        jFrame.setVisible(true);
 
-    /*
-    파일 탐색기 열기
-    기본 경로 : Download
-    지원 확장자 : xlsx
-    return : 기본경로 + 파일명 + 파일 확장자
-     */
-    public String searcher () {
-        File fileName;
-
-        String route = "";
-
-        JFileChooser jfc = new JFileChooser();
-        jfc.setCurrentDirectory(new File(defaultRoute));
-        jfc.setFileFilter(new FileNameExtensionFilter("office 엑셀 - xlsx", "xlsx"));
-
-        int returnVal = jfc.showOpenDialog(null);
-
-        if(returnVal == 0) {
-            System.out.println("파일 열기를 선택");
-
-            File file = jfc.getSelectedFile();
-
-            route = defaultRoute + "\\" +file.getName();
-            System.out.println(route);
-        }
-
-        else{
-            System.out.println("파일 열기를 취소");
-        }
-
-        return route;
-    }
-
-
-    //파일 탐색기 버튼
-    public void searcherButton () {
-        HashMap<String, HashMap<String, Double>> dataMap;
-
-        //this.setLayout(new FlowLayout());
-
-        JButton openSearcher = new JButton("파일 선택");
-        openSearcher.setBounds(30,170,400,100);
-
-        openSearcher.addActionListener(new ActionListener() {
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void run() {
+                jFrame.dispose();
+                jFrame = null;
                 try {
-                    ReadExcell readExcell = new ReadExcell(searcher());
-                    HashMap<String, HashMap<String, Double>> dataMap = readExcell.getData();
-
-                    SaveText saveText = new SaveText(dataMap, defaultRoute);
-                    saveText.makeFile();
-
-                    System.out.println(saveText.retRoute());
-
-                    Desktop.getDesktop().edit(new File(saveText.retRoute()));
-
-                    //메모장 텍스트 에어리어 출력 작성하기.
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+                    setMain();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
-        });
+        };
 
-
-
-
-        this.getContentPane().add(openSearcher);
+        timer.schedule(timerTask, 2000);
     }
 
-    public static void main(String[] args) throws Exception{
-        GUI gt = new GUI();
-        gt.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
-            }
-        });
+    public void setLoadingImg () {
+        loadingImg = new ImageIcon(imgRoute);
+
+        Integer loading_x = loadingImg.getIconWidth();
+        Integer loading_y = loadingImg.getIconHeight();
+
+        jFrame = new JFrame();
+
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
+        JLabel jLabel = new JLabel(loadingImg);
+
+        jFrame.setLocation(size.width / 2 - loading_x / 2, size.height / 2 - loading_y / 2);
+        jFrame.setUndecorated(true);
+        jFrame.setSize(loading_x, loading_y);
+        jFrame.add(jLabel);
+        jFrame.setResizable(false);
+
+        //jLabel.add
+    }
+
+    public void setMain () throws Exception{
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+
+        BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\hwk09\\Downloads\\data.txt")));
+
+        Double width = size.width * 0.4;
+        Double height = size.height * 0.6;
+
+
+
+        jFrame = new JFrame();
+        jFrame.setLocation(size.width / 2 - width.intValue() / 2, size.height / 2 - height.intValue() / 2);
+        jFrame.setSize(width.intValue(), height.intValue());
+
+        File file = new File("C:\\Users\\hwk09\\Downloads\\data.txt");
+
+        JTextArea jTextArea = new JTextArea(200, 200);
+
+        String readLine = "";
+        while((readLine = br.readLine()) != null){
+            jTextArea.append(readLine + "\n");
+        }
+
+        JLabel jLabel = new JLabel(jTextArea.getText());
+
+        jFrame.add(jLabel);
+        showMain();
+    }
+
+    public void showMain () {
+        jFrame.setVisible(true);
     }
 
 }
