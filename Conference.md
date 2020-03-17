@@ -6,7 +6,7 @@
 기획 : laid_3  
 개발 : cafeCoder   
 
-### 프로그램 요구사항 
+### 프로그램 요구사항 및 분석
     1. 기능 구현목록 정리
         1. GUI
         2. 엑셀파일 load & save
@@ -28,3 +28,21 @@
     
     2. Main   
 ![](https://github.com/hwk0911/MeasureAmount/blob/master/resource/Scheme/MAIN_%EC%B4%88%EC%95%88.png?raw=true)
+
+## 20-03-17   
+### 회의 참여자  
+요구 : 비앤드지투  
+기획 : laid_3  
+개발 : cafeCoder   
+
+### 내용   
+    1. 로딩창 사이즈
+        1. 기존 이미지의 사이즈를 그대로 사용하여 출력한다.
+        2. Title bar 숨기기
+        
+    2. Main 사이즈
+        1. 해상도 별 동적으로 변하도록 설정
+        2. Title bar 표현
+        
+    3. 공통
+        1. 생성 위치 - 중앙
