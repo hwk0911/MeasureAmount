@@ -1,28 +1,41 @@
 package GUI;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class Main extends Loading {
-    Main(String imgRoute) {
-        super(imgRoute);
-
-
-    }
+public class Main {
+    static LoadingContainer loadingContainer;
 
     public static void main(String[] args) throws Exception {
-        //String imgRoute = "\\resource\\Scheme\\load.png";
         String imgRoute = "resource\\Scheme\\load.png";
 
-        Main loading = new Main(imgRoute);
-        loading.showLoading();
+        startLoadingContainer(imgRoute);
+    }
 
+    public static void startLoadingContainer(String imgRoute) {
+        loadingContainer = new LoadingContainer(imgRoute);
+        loadingContainer.setVisible(true);
 
-        loading.addWindowListener(new WindowAdapter() {
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
             @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0);
+            public void run() {
+                endLoadingContainer();
+                startMainContainer();
             }
-        });
+        };
+
+        timer.schedule(timerTask, 2000);
+    }
+
+    public static void endLoadingContainer() {
+        loadingContainer.dispose();
+        loadingContainer = null;
+    }
+
+    public static void startMainContainer () {
+        MainContainer mainContainer = new MainContainer();
+        mainContainer.setVisible(true);
+        mainContainer.setDefaultCloseOperation(mainContainer.EXIT_ON_CLOSE);
     }
 }
