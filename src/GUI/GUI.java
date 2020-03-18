@@ -70,8 +70,8 @@ public abstract class GUI extends JFrame{
 
         BufferedReader br = new BufferedReader(new FileReader(new File("C:\\Users\\hwk09\\Downloads\\data.txt")));
 
-        Double width = size.width * 0.4;
-        Double height = size.height * 0.6;
+        Double width = size.width * 0.5;
+        Double height = size.height * 0.75;
 
 
 
