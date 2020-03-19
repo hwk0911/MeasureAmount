@@ -1,92 +1,65 @@
 package Calculator;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class Calculator {
-    public HashMap<String, HashMap<String, Double>> dataManufacture (List<String> datas) {
-        System.out.println();
+    private List<List<String>> exportDatas;
+    private HashMap<String, HashMap<String, Integer>> processDatas;
+    //private Integer sumTotal;
 
-        HashMap<String, Double> colors;
-        HashMap<String, HashMap<String, Double>> dataMap = new HashMap<>();
+    public Calculator(List<List<String>> exportDatas) {
+        this.exportDatas = exportDatas;
+        this.processDatas = new HashMap<>();
+        setProcessData();
+    }
 
-        String[] data;
-        String[] color;
+    public void setProcessData() {
+        List<String> exportData;
+        HashMap<String, Integer> processData;
 
-        for(int index = 0 , size = datas.size() ; index < size ; ++index) {
-            data = datas.get(index).split("KHWKHW");
+        int index = 0;
 
-            for(int i = 0 , s = data.length ; i < s ; ++i) {
-                System.out.println(data[i]);
+        for (int size = exportDatas.size(); index < size; ++index) {
+            exportData = exportDatas.get(index);
+
+            if(exportData.get(0).equals("상품명")){
+                continue;
+            }
+            if(this.processDatas.containsKey(exportData.get(0))) {
+                processData = this.processDatas.get(exportData.get(0));
+            }
+            else{
+                processData = new HashMap<>();
             }
 
-            color = data[1].split("/");
-
-            if(dataMap.containsKey(data[0])) {
-                colors = dataMap.get(data[0]);
-
-                for(int index_2 = 0, size_2 = color.length ; index_2 < size_2 ; ++index_2) {
-                    if(color[index_2].equals("1개만구매")){
-                        continue;
-                    }
-                    else if(colors.containsKey(color[index_2])) {
-                        Double amount = colors.get(color[index_2]);
-                        Double order = Double.parseDouble(data[2]);
-
-                        colors.put(color[index_2], amount + order);
-                    }
-                    else {
-                        Double order = Double.parseDouble(data[2]);
-
-                        colors.put(color[index_2], order);
-                    }
+            for (int column = 1, columnSize = exportData.size(); column < columnSize; ++column) {
+                if(exportData.get(2).equals("수량")){
+                    continue;
                 }
 
-                dataMap.put(data[0], colors);
-            }
-            else {
-                colors = new HashMap<>();
+                Double amount = Double.parseDouble(exportData.get(2));
+                String[] color = exportData.get(1).split("/");
 
-                for(int index_2 = 0, size_2 = color.length ; index_2 < size_2 ; ++index_2) {
-                    if(color[index_2].equals("1개만구매")){
-                        continue;
-                    }
-                    else if(colors.containsKey(color[index_2])) {
-                        Double amount = colors.get(color[index_2]);
-                        Double order = Double.parseDouble(data[2]);
+                for (int colorNum = 0, maxColorNum = color.length; colorNum < maxColorNum; ++colorNum) {
+                    Integer tempAmount;
+                    String option = color[colorNum];
 
-                        colors.put(color[index_2], amount + order);
+                    if (processData.containsKey(option)) {
+                        tempAmount = processData.get(option) + amount.intValue();
+                    } else {
+                        tempAmount = amount.intValue();
                     }
-                    else {
-                        Double order = Double.parseDouble(data[2]);
 
-                        colors.put(color[index_2], order);
-                    }
+                    processData.put(option, tempAmount);
                 }
-
-                dataMap.put(data[0], colors);
             }
+
+            this.processDatas.put(exportData.get(0), processData);
         }
+    }
 
-        Iterator<String> dataItr = dataMap.keySet().iterator();
-
-        System.out.println();
-
-        while(dataItr.hasNext()) {
-            String key = dataItr.next();
-            Iterator<String> colorsItr = dataMap.get(key).keySet().iterator();
-
-            System.out.println("제품명 : " + key);
-
-            while(colorsItr.hasNext()) {
-                String colorKey = colorsItr.next();
-                colors = dataMap.get(key);
-
-                System.out.println(colorKey + " : " + colors.get(colorKey));
-            }
-        }
-
-        return dataMap;
+    public HashMap<String, HashMap<String, Integer>> getProcessDatas() {
+        return this.processDatas;
     }
 }
