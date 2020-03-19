@@ -2,58 +2,86 @@ package SaveText;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
 public class SaveText {
-    private String route;
-    private HashMap<String, HashMap<String, Double>> dataMap;
+    private HashMap<String, HashMap<String, Integer>> exportDatas;
+    private String savePath;
+    String fileName;
+    File dataFile;
 
-    public SaveText (HashMap<String, HashMap<String, Double>> dataMap, String route) {
-        this.dataMap = dataMap;
-        this.route = route;
+    public SaveText(HashMap<String, HashMap<String, Integer>> exportDatas) {
+        this.exportDatas = exportDatas;
+        this.savePath = System.getProperty("user.home") + "\\OneDrive\\바탕 화면\\log";
+        this.fileName = setFileName();
+
+        File file = new File(this.savePath);
+        file.mkdir();
+
+        System.out.println(savePath + " 디렉토리 생성");
+
+        setDataFile();
     }
 
-    public String retRoute () {
-        return this.route;
+    private String setFileName () {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월dd일 HH시mm분ss초");
+        Date time = new Date();
+
+        String name = "\\" + format.format(time) + ".txt";
+
+        return name;
     }
 
-    public void makeFile () throws Exception{
-        File file = new File(route + "\\data.txt");
-        file.delete();
+    private void setDataFile () {
+        this.dataFile = new File(savePath + fileName);
 
-        file = new File(route + "\\data.txt");
+        Iterator<String> keyItr = this.exportDatas.keySet().iterator();
+        HashMap<String, Integer> tempMap;
 
-        this.route += "\\data.txt";
-        FileWriter fileWriter = new FileWriter(file, true);
+        try {
+            FileWriter fw = new FileWriter(dataFile);
 
-        HashMap<String, Double> colors;
+            while(keyItr.hasNext()) {
+                String key = keyItr.next();
+                Integer total = 0;
+                tempMap = this.exportDatas.get(key);
 
-        Iterator<String> dataItr = dataMap.keySet().iterator();
+                fw.write(key + "\n");
 
-        while(dataItr.hasNext()) {
-            String key = dataItr.next();
-            Iterator<String> colorsItr = dataMap.get(key).keySet().iterator();
+                Iterator<String> tempKeyItr = tempMap.keySet().iterator();
 
-            //System.out.println("제품명 : " + key);
-            fileWriter.write("제품명 : " + key + "\n");
+                while(tempKeyItr.hasNext()) {
+                    String tempKey = tempKeyItr.next();
 
-            while(colorsItr.hasNext()) {
-                String colorKey = colorsItr.next();
-                colors = dataMap.get(key);
+                    if(tempKey.toUpperCase().equals("FREE")) {
+                        continue;
+                    }
+                    else if(tempKey.equals("1개만구매")) {
+                        continue;
+                    }
+                    else {
+                        fw.write(tempKey + "\t : " + tempMap.get(tempKey) + "\n");
+                        total += tempMap.get(tempKey);
+                    }
+                }
 
-                System.out.println(colorKey + " : " + colors.get(colorKey));
-                fileWriter.write(colorKey + " : " + colors.get(colorKey).intValue() + "\n");
+                fw.write("\nTOTAL\t : " + total + "\n\n");
+                System.out.println(total);
             }
-            fileWriter.write("\n");
-        }
 
-        fileWriter.flush();
-        fileWriter.close();
+            fw.flush();
+            fw.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void endProgram () {
-        File file = new File(this.route);
-        file.delete();
+    public File getDataFile () {
+        return this.dataFile;
     }
 }
