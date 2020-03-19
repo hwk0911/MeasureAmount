@@ -1,5 +1,7 @@
 package GUI;
 
+import Calculator.Calculator;
+import SaveText.SaveText;
 import XLSXController.XLSXController;
 
 import javax.swing.*;
@@ -7,19 +9,21 @@ import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.dnd.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainContainer extends JFrame {
     Color color;
-    List<File> droppedFiles;
     dropTarget filedrop;
+    String iconPath;
 
-    MainContainer() {
+    MainContainer(String iconPath) {
         super("비앤드지투 발주 도우미 2.0.0.0");
         this.setUndecorated(false);
         this.color = new Color(71, 68,68);
         this.filedrop = new dropTarget();
+        this.iconPath = iconPath;
 
         setContainer();
     }
@@ -28,6 +32,9 @@ public class MainContainer extends JFrame {
         this.setLocation(getPoint().x - 480, getPoint().y - 405);
         this.setSize(960, 810);
         this.setResizable(false);
+
+        //todo : add imageIcon
+        this.setIconImage(new ImageIcon(iconPath).getImage());
 
         this.add(setJPanel());
     }
@@ -124,7 +131,6 @@ public class MainContainer extends JFrame {
         return jScrollPane;
     }
 }
-
 class dropTarget extends DropTarget {
     private List<File> temp;
     private List<String> filesPath;
@@ -144,10 +150,25 @@ class dropTarget extends DropTarget {
                 filesPath.add(temp.get(index).getPath());
             }
 
-            XLSXController XLSXController = new XLSXController(filesPath);
+            XLSXController xlsxController = new XLSXController(filesPath);
+            Calculator calculator = new Calculator(xlsxController.getEndExport());
+            SaveText saveText = new SaveText(calculator.getProcessDatas());
+
+            openFile(saveText.getDataFile());
+
+            filesPath = new ArrayList<>();
         }
 
         catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openFile (File file) {
+        try {
+            Desktop.getDesktop().edit(file);
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
