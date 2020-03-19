@@ -5,11 +5,14 @@ import java.util.TimerTask;
 
 public class Main {
     static LoadingContainer loadingContainer;
+    static MainContainer mainContainer;
 
     public static void main(String[] args) throws Exception {
         String imgRoute = "resource\\Scheme\\load.png";
 
         startLoadingContainer(imgRoute);
+
+        
     }
 
     public static void startLoadingContainer(String imgRoute) {
@@ -33,9 +36,10 @@ public class Main {
         loadingContainer = null;
     }
 
-    public static void startMainContainer () {
-        MainContainer mainContainer = new MainContainer();
+    public static void startMainContainer() {
+        mainContainer = new MainContainer();
         mainContainer.setVisible(true);
         mainContainer.setDefaultCloseOperation(mainContainer.EXIT_ON_CLOSE);
+
     }
 }
