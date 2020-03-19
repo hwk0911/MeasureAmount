@@ -8,15 +8,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="file://$USER_HOME$/Downloads/엑셀jar" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-        <jarDirectory url="file://$USER_HOME$/Downloads/엑셀jar" recursive="false" />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="poi-3.11" level="project" />
   </component>
 </module>

@@ -16,7 +16,7 @@ public class XLSXController {
     private List<String> filesPath;
     private List<List<String>> endExport;
 
-    private final int[] orderColumns = {1, 3, 4};
+    private final int[] orderColumns = {3, 6, 7};
     private final int[] sendColumns = {5, 7, 8};
 
     public XLSXController(List<String> filePath) {

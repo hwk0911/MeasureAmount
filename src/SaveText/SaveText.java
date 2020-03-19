@@ -16,7 +16,8 @@ public class SaveText {
 
     public SaveText(HashMap<String, HashMap<String, Integer>> exportDatas) {
         this.exportDatas = exportDatas;
-        this.savePath = System.getProperty("user.home") + "\\OneDrive\\바탕 화면\\log";
+        this.savePath = System.getProperty("user.home") + "\\OneDrive\\바탕 화면\\log"; //방법 찾아야함. (OneDrive에 저장하지 않는 경우)
+        //this.savePath = "C:\\Users\\USER\\Desktop\\log"; //임시 배포용
         this.fileName = setFileName();
 
         File file = new File(this.savePath);
