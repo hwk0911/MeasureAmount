@@ -1,16 +1,25 @@
 package GUI;
 
+import XLSXController.XLSXController;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.dnd.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainContainer extends JFrame {
     Color color;
-    Font font;
+    List<File> droppedFiles;
+    dropTarget filedrop;
 
     MainContainer() {
         super("비앤드지투 발주 도우미 2.0.0.0");
         this.setUndecorated(false);
         this.color = new Color(71, 68,68);
+        this.filedrop = new dropTarget();
 
         setContainer();
     }
@@ -19,17 +28,10 @@ public class MainContainer extends JFrame {
         this.setLocation(getPoint().x - 480, getPoint().y - 405);
         this.setSize(960, 810);
         this.setResizable(false);
-        //this.setFont();
 
         this.add(setJPanel());
     }
 
-/*
-    private void setFont () {
-        //todo : 후에 폰트 수정하여 추가할 것
-        //this.font = new Font().
-    }
-*/
     private JPanel setJPanel () {
         JPanel jPanel = new JPanel();
         jPanel.setBackground(this.color);
@@ -40,6 +42,7 @@ public class MainContainer extends JFrame {
         jPanel.add(setNextButton()).setLocation(830,725);
         jPanel.add(setFileName()).setSize(960, 50);
         jPanel.add(setDataField()).setLocation(0, 50);
+
 
         return jPanel;
     }
@@ -57,6 +60,9 @@ public class MainContainer extends JFrame {
     private JButton setExportButton () {
         JButton jButton = new JButton("EXPORT");
         jButton.setSize(700, 50);
+        jButton.setBackground(new Color(71, 68,68));
+        jButton.setForeground(Color.white);
+        jButton.setFont(new Font("돋움", Font.BOLD, 20));
 
 
         return jButton;
@@ -66,6 +72,9 @@ public class MainContainer extends JFrame {
         //TODO : 버튼 이미지로 변경할 것
         JButton jButton = new JButton("<");
         jButton.setSize(130, 50);
+        jButton.setBackground(new Color(71, 68,68));
+        jButton.setForeground(Color.white);
+        jButton.setFont(new Font("돋움", Font.BOLD, 20));
 
 
         return jButton;
@@ -75,6 +84,9 @@ public class MainContainer extends JFrame {
         //TODO : 버튼 이미지로 변경할 것
         JButton jButton = new JButton(">");
         jButton.setSize(130, 50);
+        jButton.setBackground(new Color(71, 68,68));
+        jButton.setForeground(Color.white);
+        jButton.setFont(new Font("돋움", Font.BOLD, 20));
 
 
         return jButton;
@@ -83,19 +95,60 @@ public class MainContainer extends JFrame {
     private JTextField setFileName () {
         JTextField jTextField = new JTextField("FILE NAME TEST");
         jTextField.setEditable(false);
+
         jTextField.setHorizontalAlignment(JTextField.CENTER);
+        jTextField.setForeground(Color.white);
+        jTextField.setBackground(new Color(71, 68,68));
+        jTextField.setFont(new Font("돋움", 1, 20));
+
+
 
         return jTextField;
     }
 
     private JScrollPane setDataField () {
-
         JTextArea jTextArea = new JTextArea();
         jTextArea.setEditable(true);
+        jTextArea.setFont(new Font("돋움", Font.PLAIN, 20));
+        jTextArea.setForeground(Color.WHITE);
+        jTextArea.setBackground(new Color(71, 68,68));
+        jTextArea.setDropTarget(this.filedrop);
+
+
 
         JScrollPane jScrollPane = new JScrollPane(jTextArea);
         jScrollPane.setSize(955, 675);
 
+
+
         return jScrollPane;
+    }
+}
+
+class dropTarget extends DropTarget {
+    private List<File> temp;
+    private List<String> filesPath;
+
+    dropTarget () {
+        filesPath = new ArrayList<>();
+    }
+
+    public synchronized void drop (DropTargetDropEvent evt) {
+        try {
+            evt.acceptDrop(DnDConstants.ACTION_COPY);
+            this.temp = (List<File>)
+                    evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+
+            for(int index = 0, size = temp.size() ; index < size ; ++index) {
+                System.out.println(temp.get(index).getPath());
+                filesPath.add(temp.get(index).getPath());
+            }
+
+            XLSXController XLSXController = new XLSXController(filesPath);
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
