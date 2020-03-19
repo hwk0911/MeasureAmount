@@ -11,8 +11,6 @@ public class Main {
         String imgRoute = "resource\\Scheme\\load.png";
 
         startLoadingContainer(imgRoute);
-
-        
     }
 
     public static void startLoadingContainer(String imgRoute) {
@@ -37,7 +35,7 @@ public class Main {
     }
 
     public static void startMainContainer() {
-        mainContainer = new MainContainer();
+        mainContainer = new MainContainer("resource\\icon\\비앤드지투.ico");
         mainContainer.setVisible(true);
         mainContainer.setDefaultCloseOperation(mainContainer.EXIT_ON_CLOSE);
 
