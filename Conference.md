@@ -2,7 +2,7 @@
 
 ## 20-03-16   
 ### 회의 참여자  
-요구 : 비앤드지투  
+요구 : [비앤드지투](http://a-bly.com/app/markets/?sno=4673)     
 기획 : laid_3  
 개발 : cafeCoder   
 
@@ -31,7 +31,7 @@
 
 ## 20-03-17   
 ### 회의 참여자  
-요구 : 비앤드지투  
+요구 : [비앤드지투](http://a-bly.com/app/markets/?sno=4673)       
 기획 : laid_3  
 개발 : cafeCoder   
 
@@ -49,7 +49,7 @@
 
 ## 20-03-19   
 ### 회의 참여자  
-요구 : 비앤드지투  
+요구 : [비앤드지투](http://a-bly.com/app/markets/?sno=4673)       
 기획 : laid_3  
 개발 : cafeCoder   
 
@@ -63,7 +63,7 @@
 
 ## 20-03-20   
 ### 회의 참여자  
-요구 : 비앤드지투  
+요구 : [비앤드지투](http://a-bly.com/app/markets/?sno=4673)      
 기획 : laid_3  
 개발 : cafeCoder   
 
