@@ -1,6 +1,8 @@
 package Calculator;
 
+import java.security.Key;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class Calculator {
@@ -15,51 +17,74 @@ public class Calculator {
     }
 
     public void setProcessData() {
-        List<String> exportData;
         HashMap<String, Integer> processData;
 
-        int index = 0;
-
-        for (int size = exportDatas.size(); index < size; ++index) {
-            exportData = exportDatas.get(index);
-
+        for(List<String> exportData : this.exportDatas) {
             if(exportData.get(0).equals("상품명")){
                 continue;
             }
-            if(this.processDatas.containsKey(exportData.get(0))) {
+            else if(exportData.get(1).equals("옵션 정보")) {
+                continue;
+            }
+            else if(exportData.get(2).equals("수량")) {
+                continue;
+            }
+
+            if(this.processDatas.containsKey(exportData.get(0))){
                 processData = this.processDatas.get(exportData.get(0));
             }
             else{
                 processData = new HashMap<>();
             }
 
-            for (int column = 1, columnSize = exportData.size(); column < columnSize; ++column) {
-                if(exportData.get(2).equals("수량")){
+            String[] colors = exportData.get(1).split("/");
+            Double tempAmount = Double.parseDouble(exportData.get(2));
+            Integer amount = tempAmount.intValue();
+
+            System.out.println(amount);
+
+            for(String color : colors) {
+                if(color.toUpperCase().equals("FREE")) {
+                    continue;
+                }
+                else if(color.equals("1개만구매")) {
                     continue;
                 }
 
-                Double amount = Double.parseDouble(exportData.get(2));
-                String[] color = exportData.get(1).split("/");
-
-                for (int colorNum = 0, maxColorNum = color.length; colorNum < maxColorNum; ++colorNum) {
-                    Integer tempAmount;
-                    String option = color[colorNum];
-
-                    if (processData.containsKey(option)) {
-                        tempAmount = processData.get(option) + amount.intValue();
-                    } else {
-                        tempAmount = amount.intValue();
-                    }
-
-                    processData.put(option, tempAmount);
+                if(processData.containsKey(color)) {
+                    processData.put(color, processData.get(color) + amount);
+                }
+                else {
+                    processData.put(color, amount);
                 }
             }
 
-            this.processDatas.put(exportData.get(0), processData);
+            processDatas.put(exportData.get(0), processData);
         }
+
+        this.check();
     }
 
     public HashMap<String, HashMap<String, Integer>> getProcessDatas() {
         return this.processDatas;
+    }
+
+    public void check () {
+        Iterator<String> itr = this.processDatas.keySet().iterator();
+        HashMap<String, Integer> map;
+
+        while(itr.hasNext()) {
+            String bigKey = itr.next();
+
+            System.out.println(bigKey);
+
+            map = this.processDatas.get(bigKey);
+            Iterator<String> sItr = map.keySet().iterator();
+
+            while(sItr.hasNext()) {
+                String sKey = sItr.next();
+                System.out.println(sKey + "\t" + map.get(sKey));
+            }
+        }
     }
 }
