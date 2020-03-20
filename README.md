@@ -3,9 +3,11 @@
 # 에이블리 발주 항목 계산기  
 
 ## 프로젝트 참여 
-요구 : 비앤드지투   
+요구 : [비앤드지투](http://a-bly.com/app/markets/?sno=4673)   
 기획 : laid_3   
 개발 : cafeCoder     
+
+### [jar & exe Download](https://drive.google.com/open?id=1wU79iWMZq5T_G_Qn0p7ZGsBZ-s-MGJM2)
 
 ## Class   
 1. Calculator  
