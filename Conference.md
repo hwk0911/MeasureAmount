@@ -60,3 +60,15 @@
         프로그램 종료 없이 XLSX파일을 다시 열 때 기존 데이터가 삭제되지 않고 남아있는 현상 수정
         수정 방식 : List<File> object = null
                     object = new ArrayList<>();
+
+## 20-03-20   
+### 회의 참여자  
+요구 : 비앤드지투  
+기획 : laid_3  
+개발 : cafeCoder   
+
+### 내용  
+    1. 수량체크 에러 이슈 확인 - fix
+    2. OneDrive로 인한 경로에러 확인 - fix
+        1. System.getProperty("user.home") + "\\log" 로 경로 수정
+        2. 경로 변경으로 인해 디렉토리 찾아가기 어려워, 연산 후 해당 디렉토리 열어주는 소스 추가
