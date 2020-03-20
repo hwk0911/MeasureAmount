@@ -167,6 +167,7 @@ class dropTarget extends DropTarget {
     public void openFile (File file) {
         try {
             Desktop.getDesktop().edit(file);
+            Desktop.getDesktop().open(new File(System.getProperty("user.home") + "\\log"));
         }
         catch (IOException e) {
             e.printStackTrace();
