@@ -66,12 +66,13 @@ public class SaveText {
                     }
                     else {
                         fw.write(tempKey + "\t : " + tempMap.get(tempKey) + "\n");
+                        System.out.println(tempMap.get(tempKey) + "수량 테스트");
                         total += tempMap.get(tempKey);
                     }
                 }
 
                 fw.write("\nTOTAL\t : " + total + "\n\n");
-                System.out.println(total);
+               // System.out.println(total);
             }
 
             fw.flush();
