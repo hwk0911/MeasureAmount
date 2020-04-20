@@ -62,7 +62,7 @@ public class SaveText {
                         continue;
                     }
                     else {
-                        fw.write(tempKey + "\t : " + tempMap.get(tempKey) + "\n");
+                        fw.write(tempKey + "\t : " + tempMap.get(tempKey) + "\t재고" + "\n");
                         System.out.println(tempMap.get(tempKey) + "수량 테스트");
                         total += tempMap.get(tempKey);
                     }
